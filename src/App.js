@@ -8,6 +8,7 @@ class App extends Component {
     text: sampleText
   }
 
+
   handleChange = (event) => {
     const text = event.target.value
     this.setState({text})
@@ -20,6 +21,28 @@ class App extends Component {
     // destructuring c'est comme faire return { __html: __html }
     return { __html }
   }
+
+  // à chaque mount, rechargement de la page tu prends en compte le save
+
+  componentDidMount () {
+    // recuperer notre text qui est stocké dans le localStorage
+    const text = localStorage.getItem('markdown')
+
+    if (text)
+    this.setState({text})
+  else
+    this.setState({text: sampleText})
+  }
+
+  // lorsque le state est mis à jour tu me le save dans le localStorage
+  componentDidUpdate () {
+    //  on recupere le state et, on le stock dans une variable
+    const text = this.state.text
+
+    // save le state,la donnée lorsque l'il/elle est modifié sur le navigateur en conséquence
+    // utiliser let setItem pour save,mettre en place
+    localStorage.setItem('markdown', text )
+    }
 
   render () {
     return (
